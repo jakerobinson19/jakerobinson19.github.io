@@ -1,3 +1,4 @@
+---
 title: "Crush the curve"
 excerpt: "How are we spending our time during Quarantine?"
 header:
