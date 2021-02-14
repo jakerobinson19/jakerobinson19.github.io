@@ -81,6 +81,7 @@ footer:
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/"
 
+# Defaults
 defaults:
   # _posts
   - scope:
@@ -90,22 +91,65 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: true
+      comments: # true
       share: true
       related: true
-  # _pages
+  # _portfolio
   - scope:
-      path: "_pages"
-      type: pages
+      path: ""
+      type: portfolio
     values:
       layout: single
       author_profile: true
+      read_time: true
+      comments: # true
+      share: true
+      related: true
 
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
+
+    # _about
+  - scope:
+      path: ""
+      type: about
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: # true
+      share: true
+      related: true
+
+     # _learning
+  - scope:
+      path: ""
+      type: learning
+    values:
+      layout: single
+      author_profile: ture
+      share: true
+      related: true
+
+     # _learning
+  - scope:
+      path: ""
+      type: thingsilike
+    values:
+      layout: single
+      author_profile: ture
+      share: true
+      related: true
+
+
+  # Collections
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+  learning:
+    output: true
+    permalink: /:collection/:path/
+  thingsilike:
+      output: true
+      permalink: /:collection/:path/
 
 theme: jekyll-theme-minimal
