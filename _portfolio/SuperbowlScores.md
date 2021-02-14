@@ -2,7 +2,7 @@
 title: "Superbowl Scores By Decade"
 excerpt: "Have Superbowls really gotten better over the years?"
 header:
-  teaser: /Images/NetflixOriginals/NetflixOriginalsPreview.png
+  teaser: /Images/SuperbowlScores/football.jpg
 ---
 
 ## Superbowls
