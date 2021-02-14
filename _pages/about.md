@@ -1,8 +1,21 @@
 ---
+layout: single
+title: "About Me"
 permalink: /about/
-title: "About"
+header:
+  overlay_image: /Images/FreeStockPhotos/Nature/bryce_black_white_skinny.jpeg
+author_profile: true
+classes: wide
 ---
 
-Tempor velit sint sunt ipsum tempor enim ad qui ullamco. Est dolore anim ad velit duis dolore minim sunt aliquip amet commodo labore. Ut eu pariatur aute ea aute excepteur laborum. Esse ea esse excepteur minim mollit qui cillum excepteur ex dolore magna. Labore deserunt fugiat incididunt incididunt sint ea. Consequat dolore aute laboris quis proident quis non et est consectetur ex eiusmod sit culpa.
+# Hey! Nice to meet you.
 
-Cupidatat ea do et in excepteur in. Ad nostrud ut est esse eu duis ea sunt eiusmod. Aliquip tempor veniam sint elit fugiat. Velit incididunt laboris amet incididunt labore dolore irure velit excepteur commodo deserunt laborum. Consectetur eu fugiat veniam veniam Lorem labore magna eiusmod. Ea occaecat reprehenderit pariatur consectetur minim labore ut aliquip.
+Hey! I'm Jake. I'm a data nerd.
+
+I'm a data scientist.
+
+This website is meant to be a portfolio of all of my side projects and some of my work and school projects. It'll also have a bunch of my notes about data science, business, and life in general. And finally, it'll have a bit of my musings and weird thoughts.
+
+I'm always open to messages. I'm open to mentor, or be mentored. I'm interested in collaborations, freelance work, startups, and whatever else you have in mind.
+
+You can email me, find me on LinkedIn, or slide into my DM's on Instagram.
