@@ -2,7 +2,7 @@
 title: "Crush the curve"
 excerpt: "How are we spending our time during Quarantine?"
 header:
-  teaser: /Images/CovidMobiity/Covid_Mobility_Viz.png
+  teaser: /Images/CovidMobility/Covid_Mobility_Viz.png
 ---
 
 ## Covid Mobility
