@@ -3,7 +3,7 @@ layout: single
 title: "About Me"
 permalink: /about/
 header:
-  overlay_image: /Images/FreeStockPhotos/Nature/bryce_black_white_skinny.jpeg
+  overlay_image: /Images/StockPhotos/grand-canyon-stock.jpg
 author_profile: true
 classes: wide
 ---
