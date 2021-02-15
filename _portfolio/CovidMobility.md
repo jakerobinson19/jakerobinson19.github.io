@@ -7,4 +7,4 @@ header:
 
 ## Covid Mobility
 
-<iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/a08e73c0-afec-4f28-b7a9-15e4cc9ebd5e/page/sUnlB" frameborder="0" style="border:0" allowfullscreen></iframe>
+<iframe width="800" height="600" src="https://datastudio.google.com/embed/reporting/a08e73c0-afec-4f28-b7a9-15e4cc9ebd5e/page/sUnlB" frameborder="0" style="border:0" allowfullscreen></iframe>
