@@ -1,7 +1,52 @@
 ---
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-layout: home
-author_profile: true
+layout: splash
+permalink: /
+hidden: true
+title: "Jake Robinson"
+header:
+author_profile: false
+excerpt: "Industry proven data scientist and software engineer"
+header:
+  overlay_image: /assets/images/stock/grand-canyon-stock.jpg
+  overlay_filter: linear-gradient(rgba(255, 0, 0, 0.5), rgba(0, 255, 255, 0.5))
+  actions:
+    - label: "<i class='fas fa-envelope'></i> Contact me!"
+      url: "mailto: jakerobinson19@gmail.com"
+feature_row:
+  -
+    title: "Get to Know Me"
+    excerpt: "What's my story? Take a look at my work experience, where I went to school, as well as some of my favorite things"
+    url: "/about/"
+    btn_class: "btn--primary"
+    btn_label: "Check it out"
+  -
+    title: "See Some of My Work"
+    excerpt: "Wanna see some cool data visualizations? Here's a collection of some projects I've worked on"
+    url: "/portfolio/"
+    btn_class: "btn--primary"
+    btn_label: "Check it out"
+  - 
+    title: "Learn Data Science"
+    excerpt: "Learning and data resources I've enjoyed over the years in case you're eager to learn data science"
+    url: "/resources/"
+    btn_class: "btn--primary"
+    btn_label: "Check it out"
 ---
+
+<h1> Hi, I'm Jake Robinson, and I <strong>love</strong> data.</h1>
+
+<p> I'm a data scientist and software engineer who enjoys gleaning insights from data to empower the decision-making process, in business and in my own life, and to gain get a better understading of the world around me.  If I can help you out, let me know. </p>
+<p> Feel free to shoot me an email, or message me on <a style='color:#0074b1' href="https://www.linkedin.com/in/jakerobinson19/">LinkedIn</a></p>
+<hr>
+
+<h3>I am excited to:</h3>
+<ol>
+<li> Uncover valuable insight in your data </li>
+<li> Create beautiful dashboards and visuals that gives you and your organization clarity </li>
+<li> Develop apps using analytics and machine learning that help you understand your process better </li>
+</ol>
+
+<h3>I solve data problems by:</h3>
+<p> wrangling and cleaning data, conducting exploratory and statistical analysis, performing machine learning, making interactive visualizations, engaging with others, building intuitive user interfaces, and communicating often. <i>Rinse and repeat.</i> </p>
+<hr>
+{% include feature_row %}
