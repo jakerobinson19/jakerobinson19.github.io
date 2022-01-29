@@ -2,7 +2,7 @@
 title: "EDA: NYC MTA Turnstile Data"
 excerpt: "A fun analysis on NYC Subway data for 2013"
 header:
-  teaser: /assets/images/GMEvsRedditMentions.png
+  teaser: /assets/images/MTA_subway.jpg
 number: 1
 ---
 
