@@ -3,7 +3,7 @@ title: "Most Popular PC Games"
 excerpt: "Who's the top dog in gaming?"
 header:
   teaser: /assets/images/Popular_PC_Games_viz.png
-number: 3
+number: 4
 ---
 
 ## PC Games

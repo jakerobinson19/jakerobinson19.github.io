@@ -3,7 +3,7 @@ title: "Superbowl Scores By Decade"
 excerpt: "Have Superbowls really gotten better over the years?"
 header:
   teaser: /assets/images/football.jpg
-number: 1
+number: 2
 ---
 
 ## Superbowls

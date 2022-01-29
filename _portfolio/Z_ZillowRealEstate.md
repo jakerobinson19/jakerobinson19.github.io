@@ -3,7 +3,7 @@ title: "Real Estate"
 excerpt: "What are the most expensive real estate markets in the US"
 header:
   teaser: /assets/images/zillow_real_estate.png
-number: 5
+number: 6
 ---
 
 ## US Real Estate
