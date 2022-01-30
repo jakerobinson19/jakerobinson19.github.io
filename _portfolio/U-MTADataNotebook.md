@@ -10,6 +10,19 @@ classes: wide
 ## NYC MTA Turnstile Data
 
 
+## Table of Contents
+- [Data Import](#Pull-in-2013-Data)
+- [Data Cleaning](#Cleaning-And-Quality-Check)
+- [Exploration]
+    1. [Which station has the most number of units?](#Question-1)
+    2. [What is the total number of entries & exits across the subway system for February 1, 2013](#Question-2)
+    3. [What station was the busiest on February 1, 2013? What turnstile was the busiest on that date?](#Question-3)
+    4. [What stations have seen the most usage growth/decline in 2013?](#Question-4)
+    5. [What dates are the least busy? Could you identify days on which stations were not operating at full capacity or closed entirely?](#Question-5)
+    6. [What hour is the busiest for station CANAL ST in Q1 2013?](#Bonus)
+
+
+
 ```python
 import pandas as pd
 import os
@@ -81,6 +94,8 @@ print(f"Number of rows: {len(df)}")
 ### Pull in new data file
 We also need to pull the latest data file which contains the stations that each unit is in, which is not included in 2013 data files. This data will be merged in to get the station to turnstile mapping.
 
+------
+
 ## Cleaning and Quality Check
 
 #### Null Rows
@@ -107,9 +122,6 @@ df.dropna(inplace=True)
 ```python
 df.describe()
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -179,7 +191,6 @@ df.describe()
 </div>
 
 
-
 A quick description of the data shows that there appear to be negative values for the Entries and Exits. This doesn't make any sense given that the columns are meant to be cumulative. However, while the exact reason these values are negative is unclear (may have something to do with DOOR OPEN/DOOR CLOSE events), from a quick check of some of the records the data still seems to be accurately counting the number of exits/entries in between each reading even if the value is abnormal. Thus, we can still calculate the change and then evaluate if we still get negative values there (which we'll have to fix). 
 
 #### Dates
@@ -189,10 +200,7 @@ Combining the date and time columns into a separate datetime column will simplif
 ```python
 df['DateTime'] = pd.to_datetime(df['DATE'] + ' ' + df['TIME'])
 df = df.drop(columns=['DATE','TIME'])
-```
 
-
-```python
 df = df[(df.DateTime > '2013-01-01 00:00:00') & (df.DateTime < '2013-12-31 23:59:59')]
 ```
 
@@ -316,11 +324,8 @@ df.describe()
 
 
 
-
 ```python
 tot_rows_neg = len(df.loc[(df['EntriesChange'] < 0) | (df['ExitsChange'] < 0)])
-print(f"Total rows with negative change values: {tot_rows_neg}")
-print(f"Percentage of negative change values rows out of total: {round(tot_rows_neg/len(df)*100,2)}%")
 ```
 
     Total rows with negative change values: 2304
@@ -333,7 +338,10 @@ However, with the negative values means we have the inverse happening where ther
 
 
 ```python
-df.loc[(df.TurnStile == 'R644-R135-01-00-00') & (df.DateTime.dt.date.astype(str) == '2013-11-26')].head()
+df.loc[
+            (df.TurnStile == "R644-R135-01-00-00")
+            & (df.DateTime.dt.date.astype(str) == "2013-11-26")
+        ].head()
 ```
 
 
@@ -547,7 +555,8 @@ df.describe()
 
 Much better. Now we're ready
 
-## Question 1: Which station has the most number of units?
+## Question 1
+### Which station has the most number of units?
 We can use the most recent data file to get the current number of units per stations. Also, 2013 data does not contain the station column.
 
 
@@ -566,7 +575,7 @@ ax.legend().set_visible(False)
 ```
 
 
-![png](output_31_0.png)
+![png](/assets/images/output_31_0.png)
 
 
 #### ANSWER
@@ -585,7 +594,8 @@ print(f"Answer: {pd.Series(largest_stations)[:1]}")
 
 ----------
 
-## Question 2: What is the total number of entries & exits across the subway system for February 1, 2013?
+## Question 2
+### What is the total number of entries & exits across the subway system for February 1, 2013?
 
 
 ```python
@@ -704,9 +714,6 @@ feb113_df.head()
 ```python
 tot_entries = feb113_df.EntriesChange.sum()
 tot_exits = feb113_df.ExitsChange.sum()
-
-print(f"Total number of entries across the whole subway system on February 1, 2013: {tot_entries}")
-print(f"Total number of exits across the whole subway system on February 1, 2013: {tot_exits}")
 ```
 
     Total number of entries across the whole subway system on February 1, 2013: 5818588.0
@@ -717,7 +724,8 @@ On February 1st 2013, 5.81 million people entered the subway and only 4.51 milli
 
 ----------
 
-## Question 3: What station was the busiest on February 1, 2013? What turnstile was the busiest on that date?
+## Question 3
+### What station was the busiest on February 1, 2013? What turnstile was the busiest on that date?
 
 To answer this we first have to map the stations to their turnstiles since Feb 2013 data does not contain the station field. MTA provides a Remote-Booth-Station.xls file to help with this. I downloaded it into my home directory and read it in to merge with the Feb 2013 data.
 
@@ -726,12 +734,17 @@ Note: Some booths and/or units do not have records in the excel file. Possibly t
 
 ```python
 stat_map = pd.read_excel('../../mta_data/Remote-Booth-Station.xls')
-feb113_df = feb113_df.merge(stat_map, left_on=["C/A","UNIT"],right_on=["Booth","Remote"],how='left')
+feb113_df = feb113_df.merge(
+            stat_map, left_on=["C/A", "UNIT"], right_on=["Booth", "Remote"], how="left"
+        )
 ```
 
 
 ```python
-print(f"{feb113_df.isna().any(axis=1).sum()} turnstile do not have mapped stations available ({feb113_df.isna().any(axis=1).sum()/len(feb113_df)*100}%)")
+print(
+      f"{feb113_df.isna().any(axis=1).sum()} turnstile do not have mapped stations available "
+    + f"({feb113_df.isna().any(axis=1).sum()/len(feb113_df)*100}%)"
+    )
 ```
 
     558 turnstile do not have mapped stations available (1.8250204415372036%)
@@ -802,6 +815,9 @@ busiest_stations
 </div>
 
 
+    Busiest Station: 34 ST-PENN STA
+    Total Entries + Exits on Feb 1st 2013: 348286
+
 
 
 ```python
@@ -867,24 +883,11 @@ busiest_turnstiles
 
 
 
-
-```python
-print(f"Busiest Station: {busiest_stations.iloc[0].name}") 
-print(f"Total Entries + Exits on Feb 1st 2013: {int(busiest_stations.iloc[0]['Entries+Exits'])}")
-```
-
-    Busiest Station: 34 ST-PENN STA
-    Total Entries + Exits on Feb 1st 2013: 348286
-
-
-
 ```python
 # station that the busiest turnstile is located in
-tstile_station = feb113_df.loc[feb113_df.TurnStile == busiest_turnstiles.iloc[0].name]['Station'].iloc[0]
-
-print(f"Busiest Turnstile: {busiest_turnstiles.iloc[0].name}")
-print(f"Located in Station: {tstile_station}")
-print(f"Total Entries + Exits on Feb 1st 2013: {int(busiest_turnstiles.iloc[0]['Entries+Exits'])}")
+tstile_station = feb113_df.loc[
+            feb113_df.TurnStile == busiest_turnstiles.iloc[0].name
+        ]["Station"].iloc[0]
 ```
 
     Busiest Turnstile: R240-R047-00-00-00
@@ -894,7 +897,8 @@ print(f"Total Entries + Exits on Feb 1st 2013: {int(busiest_turnstiles.iloc[0]['
 
 ----------
 
-## Question 4: What stations have seen the most usage growth/decline in 2013?
+## Question 4
+### What stations have seen the most usage growth/decline in 2013?
 
 To avoid the risk of periodicity or anomalies on certain dates by check the percent change from the first to last date, we can take the average quarterly business for each station and then compare the Q1 to Q4 traffic to see how its changed.
 
@@ -908,10 +912,22 @@ df['Entries+Exits'] = df['EntriesChange'] + df['ExitsChange']
 
 ```python
 # calculate Q1 and Q4 mean traffic for each station
-q1 = df.loc[df['DateTime'].dt.month.isin([1,2,3])].groupby(['Station'])['Entries+Exits'].mean().to_frame('Q1Mean')
-q4 = df.loc[df['DateTime'].dt.month.isin([10,11,12])].groupby(['Station'])['Entries+Exits'].mean().to_frame('Q4Mean')
-q_df = q1.join(q4)
-q_df['PercentChange'] = round(((q_df['Q4Mean'] - q_df['Q1Mean'])/q_df['Q1Mean'])*100,3)
+        q1 = (
+            df.loc[df["DateTime"].dt.month.isin([1, 2, 3])]
+            .groupby(["Station"])["Entries+Exits"]
+            .mean()
+            .to_frame("Q1Mean")
+        )
+        q4 = (
+            df.loc[df["DateTime"].dt.month.isin([10, 11, 12])]
+            .groupby(["Station"])["Entries+Exits"]
+            .mean()
+            .to_frame("Q4Mean")
+        )
+        q_df = q1.join(q4)
+        q_df["PercentChange"] = round(
+            ((q_df["Q4Mean"] - q_df["Q1Mean"]) / q_df["Q1Mean"]) * 100, 3
+        )
 ```
 
 #### Stations with largest growth in 2013
@@ -920,9 +936,6 @@ q_df['PercentChange'] = round(((q_df['Q4Mean'] - q_df['Q1Mean'])/q_df['Q1Mean'])
 ```python
 q_df.sort_values('PercentChange', ascending=False).head(3)
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -989,12 +1002,7 @@ beach44_df.join(beach90_df).join(aqueduct_df).fillna(0).plot(kind='line')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7ffbc967e250>
-
-
-
-
-![png](output_58_1.png)
+![png](/assets/images/output_58_1.png)
 
 
 #### Stations with largest decline in 2013
@@ -1071,13 +1079,7 @@ howard_df.join(whitehall_df).join(dyckman_df).fillna(0).plot(kind='line')
 
 
 
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7ffbc8a365d0>
-
-
-
-
-![png](output_61_1.png)
+![png](/assets/images/output_61_1.png)
 
 
 ### ANSWER
@@ -1099,7 +1101,8 @@ Fun Fact: Again, Hurricane Sandy comes into play. Because of numerous closings o
 
 ------
 
-## Question 5: What dates are the least busy? Could you identify days on which stations were not operating at full capacity or closed entirely?
+## Question 5
+### What dates are the least busy? Could you identify days on which stations were not operating at full capacity or closed entirely?
 
 
 #### Least Busy Days
@@ -1176,11 +1179,18 @@ In other words: Completely Closed = total ridership for the day is zero
 
 
 ```python
-closed_stations = df.groupby(['Station','DATE'])['Entries+Exits'].sum().to_frame('DailyTraffic').query("DailyTraffic == 0")
-closed_stations = closed_stations.reset_index().groupby('DATE').agg(lambda x: x.tolist())
-closed_stations['NumberOfStationsClosed'] = closed_stations['Station'].apply(lambda x: len(x))
-print(f" Number of days which have a station closed: {len(closed_stations)}")
-print(f" Number of stations closed for the day throughout 2013: {closed_stations.NumberOfStationsClosed.sum()}")
+closed_stations = (
+            df.groupby(["Station", "DATE"])["Entries+Exits"]
+            .sum()
+            .to_frame("DailyTraffic")
+            .query("DailyTraffic == 0")
+        )
+closed_stations = (
+            closed_stations.reset_index().groupby("DATE").agg(lambda x: x.tolist())
+        )
+closed_stations["NumberOfStationsClosed"] = closed_stations["Station"].apply(
+            lambda x: len(x)
+        )
 ```
 
      Number of days which have a station closed: 152
@@ -1370,7 +1380,8 @@ Not too surprising that the biggest holidays are the least busy days
 
 Refer to the above data frames to see the list of stations that are either completely or partially closed on certain dates.
 
-## Bonus: What hour is the busiest for station CANAL ST in Q1 2013?
+## Bonus
+### What hour is the busiest for station CANAL ST in Q1 2013?
 
 
 ```python
