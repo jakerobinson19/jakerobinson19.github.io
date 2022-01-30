@@ -4,6 +4,7 @@ excerpt: "A fun analysis on publicly available NYC Subway data for 2013"
 header:
   teaser: /assets/images/MTA_subway.jpg
 number: 1
+classes: wide
 ---
 
 ## NYC MTA Turnstile Data
