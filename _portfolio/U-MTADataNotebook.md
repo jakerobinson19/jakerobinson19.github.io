@@ -11,15 +11,15 @@ classes: wide
 
 
 ## Table of Contents
-- [Data Import](#Pull-in-2013-Data)
-- [Data Cleaning](#Cleaning-And-Quality-Check)
-- [Exploration]
-    1. [Which station has the most number of units?](#Question-1)
-    2. [What is the total number of entries & exits across the subway system for February 1, 2013](#Question-2)
-    3. [What station was the busiest on February 1, 2013? What turnstile was the busiest on that date?](#Question-3)
-    4. [What stations have seen the most usage growth/decline in 2013?](#Question-4)
-    5. [What dates are the least busy? Could you identify days on which stations were not operating at full capacity or closed entirely?](#Question-5)
-    6. [What hour is the busiest for station CANAL ST in Q1 2013?](#Bonus)
+- [Data Import](#pull-in-2013-data)
+- [Data Cleaning](#cleaning-and-quality-check)
+- Analysis
+    1. [Which station has the most number of units?](#question-1)
+    2. [What is the total number of entries & exits across the subway system for February 1, 2013](#question-2)
+    3. [What station was the busiest on February 1, 2013? What turnstile was the busiest on that date?](#question-3)
+    4. [What stations have seen the most usage growth/decline in 2013?](#question-4)
+    5. [What dates are the least busy? Could you identify days on which stations were not operating at full capacity or closed entirely?](#question-5)
+    6. [What hour is the busiest for station CANAL ST in Q1 2013?](#bonus)
 
 
 
@@ -568,14 +568,26 @@ new_df['TurnStile'] = new_df['C/A'] + '-' + new_df['UNIT'] + '-' + new_df['SCP']
 
 ```python
 fig, ax = plt.subplots(figsize=(25, 8))
-largest_stations = new_df.drop_duplicates('TurnStile').groupby(['STATION']).size().sort_values(ascending=False).head(10)
-largest_stations.plot(kind='bar',ax=ax)
-ax.set(title='Top 10 Largest Stations by Turnstile Count', xlabel='Station', ylabel='Number of TurnStiles')
+
+largest_stations = (
+            new_df.drop_duplicates("TurnStile")
+            .groupby(["STATION"])
+            .size()
+            .sort_values(ascending=False)
+            .head(10)
+        )
+largest_stations.plot(kind="bar", ax=ax)
+
+ax.set(
+        title="Top 10 Largest Stations by Turnstile Count",
+        xlabel="Station",
+        ylabel="Number of TurnStiles",
+      )
 ax.legend().set_visible(False)
 ```
 
 
-![png](/assets/images/output_31_0.png)
+![png](/assets/images/largest-stations-volume-q1.png)
 
 
 #### ANSWER
@@ -1002,7 +1014,7 @@ beach44_df.join(beach90_df).join(aqueduct_df).fillna(0).plot(kind='line')
 
 
 
-![png](/assets/images/output_58_1.png)
+![png](/assets/images/largest-growth-stations.png)
 
 
 #### Stations with largest decline in 2013
@@ -1079,7 +1091,7 @@ howard_df.join(whitehall_df).join(dyckman_df).fillna(0).plot(kind='line')
 
 
 
-![png](/assets/images/output_61_1.png)
+![png](/assets/images/largest-decline-stations.png)
 
 
 ### ANSWER
